@@ -43,10 +43,10 @@ function MenuAdministrador() {
         {/* Sidebar */}
         <div className="sidebar">
           <h4>Menú</h4>
-          <a href="#">
+          <a href="/MenuAdministrador">
             <i className="fas fa-home"></i> Dashboard
           </a>
-          <a href="#">
+          <a href="/MenuTickets">
             <i className="fas fa-ticket-alt"></i> Tickets
           </a>
           <a href="#">
