@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import "./Css/LoginPage.css";
+import "./LoginPage.css";
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -35,13 +35,31 @@ function LoginPage() {
 
       if (response.data.isSuccess) {
         localStorage.setItem('authToken', response.data.token);
-        navigate(`/Menu${response.data.rol.replace(/\s/g, '')}`, { 
-          state: { usuario: response.data } 
-        });
+        switch (response.data.rol) {
+            case "Administrador":
+              navigate('/MenuAdministrador', {
+            state: { usuario: response.data } 
+          });
+            break;
+
+            case "Soporte Técnico":
+            navigate('/MenuEmpleado', {
+            state: { usuario: response.data } 
+          });
+            break;
+
+            case "Usuario Final":
+            navigate('/MenuCliente', {
+            state: { usuario: response.data } 
+          });
+            break;
+        
+        }
       } else {
         setError(response.data.message || 'Credenciales incorrectas');
       }
     } catch (error) {
+      console.log(error);
       setError(error.response?.data?.message || 'Error de conexión');
     } finally {
       setLoading(false);
@@ -49,6 +67,7 @@ function LoginPage() {
   };
 
   return (
+    <div className="login-root">
     <section className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
         <h1>Login</h1>
@@ -92,6 +111,7 @@ function LoginPage() {
       <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
       <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </section>
+  </div>
   );
 }
 

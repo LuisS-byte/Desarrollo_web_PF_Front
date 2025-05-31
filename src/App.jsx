@@ -2,7 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './Components/LoginPage';
 import MenuEmpleado from './Components/MenuEmpleado';
 import MenuCliente from './Components/MenuCliente'; 
-import MenuAdministrador from './Components/MenuAdministrador';
+import MenuAdministrador from './Components/administrator/MenuAdministrador';
 
 function App() {
   return (

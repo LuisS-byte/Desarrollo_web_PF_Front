@@ -9,17 +9,16 @@ https://codepen.io/ecemgo/pen/Baqpbez */
   font-family: 'poppins',sans-serif;
 }
 
-body {
+/* LoginPage.css */
+.login-root {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   background-image: url(https://www.orbit.es/wp-content/uploads/2023/01/sostenibilidad-tecnologia-verde.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
+  background-position: center;
 }
-
 section {
     position: relative;
     max-width: 400px;
