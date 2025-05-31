@@ -49,46 +49,49 @@ function LoginPage() {
   };
 
   return (
-    <div className="ring">
-      <i style={{ "--clr": "#00ff0a" }}></i>
-      <i style={{ "--clr": "#ff0057" }}></i>
-      <i style={{ "--clr": "#fffd44" }}></i>
-      <div className="login">
-        <h2>Login</h2>
-        {error && <div className="error">{error}</div>}
-        <form onSubmit={handleLogin}>
-          <div className="inputBx">
-            <input
-              type="email"
-              name="correo"
-              placeholder="Correo"
-              value={formData.correo}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="inputBx">
-            <input
-              type="password"
-              name="clave"
-              placeholder="Contraseña"
-              value={formData.clave}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="inputBx">
-            <button type="submit" disabled={loading}>
-              {loading ? 'Cargando...' : 'Ingresar'}
-            </button>
-          </div>
-        </form>
-        <div className="links">
-          <Link to="/recuperar">¿Olvidó su contraseña?</Link>
-          <Link to="/registro">Registrarse</Link>
+    <section className="login-container">
+      <form className="login-form" onSubmit={handleLogin}>
+        <h1>Login</h1>
+        
+        {error && <div className="error-message">{error}</div>}
+        
+        <div className="inputbox">
+          <ion-icon name="mail-outline"></ion-icon>
+          <input 
+            type="email" 
+            name="correo"
+            required 
+            value={formData.correo}
+            onChange={handleChange}
+          />
+          <label>Correo</label>
         </div>
-      </div>
-    </div>
+        
+        <div className="inputbox">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <input 
+            type="password" 
+            name="clave"
+            required 
+            value={formData.clave}
+            onChange={handleChange}
+          />
+          <label>Contraseña</label>
+        </div>
+        
+        <button type="submit" disabled={loading}>
+          {loading ? 'Cargando...' : 'Ingresar'}
+        </button>
+        
+        <div className="register">
+          <p>No tienes una cuenta? <Link to="/registro">Regístrate</Link></p>
+        </div>
+      </form>
+      
+      {/* Scripts de ionicons */}
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </section>
   );
 }
 
