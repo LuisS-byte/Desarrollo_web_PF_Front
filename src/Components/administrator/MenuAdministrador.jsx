@@ -13,9 +13,17 @@ function MenuAdministrador() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
+        const token = localStorage.getItem('authToken'); // Recupera el token del localStorage
+
         const response = await axios.get(
-          "http://localhost:5053/api/Administrador/ListaConteoTickets"
+          "http://localhost:5053/api/Administrador/ListaConteoTickets",
+          {
+            headers: {
+              Authorization: `Bearer ${token}` // Agrega el token en los headers
+            }
+          }
         );
+
         const sortedTickets = response.data.value.sort((a, b) => b.id - a.id);
         const latestTickets = sortedTickets.slice(0, 5); // Obtener los 5 tickets más recientes
         setTickets(latestTickets);
@@ -36,6 +44,7 @@ function MenuAdministrador() {
 
   if (loading) return <div className="text-center py-5">Cargando...</div>;
   if (error) return <div className="alert alert-danger">Error: {error}</div>;
+
 
   return (
     <div className="admin-root">
