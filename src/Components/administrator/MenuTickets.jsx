@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./MenuTickets.css";
+import { useNavigate } from 'react-router-dom';
 
 function MenuTickets() {
   const [ticketsPendientes, setTicketsPendientes] = useState([]);
@@ -11,6 +12,13 @@ function MenuTickets() {
   const [servicios, setServicios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Estados para el modal de asignación
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [selectedTecnico, setSelectedTecnico] = useState('');
+  const [comentario, setComentario] = useState('');
+const navigate = useNavigate();
 
   const [filtroPendientes, setFiltroPendientes] = useState({
     busqueda: '',
@@ -69,7 +77,7 @@ function MenuTickets() {
         const categoriaMatch = !filtroPendientes.categoria || ticket.categoria === filtroPendientes.categoria;
         return tituloMatch && prioridadMatch && categoriaMatch;
       })
-      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha)); // Ordenar por fecha descendente
+      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
   };
 
   const filtrarAsignados = () => {
@@ -80,7 +88,60 @@ function MenuTickets() {
         const estadoMatch = !filtroAsignados.estado || ticket.estado === filtroAsignados.estado;
         return tituloMatch && tecnicoMatch && estadoMatch;
       })
-      .sort((a, b) => new Date(b.fechaAsignacion) - new Date(a.fechaAsignacion)); // Ordenar por fecha de asignación descendente
+      .sort((a, b) => new Date(b.fechaAsignacion) - new Date(a.fechaAsignacion));
+  };
+
+  // Función para abrir el modal de asignación
+  const handleAsignarClick = (ticket) => {
+    setSelectedTicket(ticket);
+    setSelectedTecnico('');
+    setComentario('');
+    setShowModal(true);
+  };
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  // Función para enviar la asignación
+  const handleSubmitAsignacion = async () => {
+    try {
+      if (!selectedTecnico) {
+        alert('Por favor seleccione un técnico');
+        return;
+      }
+
+      const tecnicoSeleccionado = tecnicos.find(t => t.nombre === selectedTecnico);
+      
+      const payload = {
+        idTicket: selectedTicket.id,
+        idUsuairo: tecnicoSeleccionado.id,
+        descripcion: comentario
+      };
+
+      const response = await axios.post('http://localhost:5053/api/Administrador/CrearTicketAsignacion', payload);
+
+      if (response.data.success) {
+        // Actualizar la lista de tickets
+        const [pendientesRes, asignadosRes] = await Promise.all([
+          axios.get('http://localhost:5053/api/Administrador/TicketsPendientesAsignacion'),
+          axios.get('http://localhost:5053/api/Administrador/TicketsAsignados')
+        ]);
+
+        setTicketsPendientes(pendientesRes.data.value);
+        setTicketsAsignados(asignadosRes.data.value);
+        
+        setShowModal(false);
+        navigate('/MenuTickets');
+
+      } else {
+        alert('Error al asignar el ticket: ' + response.data.message);
+      }
+    } catch (error) {
+      console.error('Error al asignar ticket:', error);
+      alert('Error al asignar el ticket: ' + error.message);
+    }
   };
 
   if (loading) return <div className="loading">Cargando...</div>;
@@ -88,6 +149,55 @@ function MenuTickets() {
 
   return (
     <div className="tick-root">
+      {/* Modal de Asignación */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-container">
+            <div className="modal-header">
+              <h5>Asignar Ticket #{selectedTicket.id.toString().padStart(3, '0')}</h5>
+              <button className="modal-close" onClick={handleCloseModal}>
+                &times;
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="form-group">
+                <label>Técnico:</label>
+                <select
+                  className="form-select"
+                  value={selectedTecnico}
+                  onChange={(e) => setSelectedTecnico(e.target.value)}
+                >
+                  <option value="">Seleccione un técnico</option>
+                  {tecnicos.map(tecnico => (
+                    <option key={tecnico.id} value={tecnico.nombre}>
+                      {tecnico.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Comentario:</label>
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  value={comentario}
+                  onChange={(e) => setComentario(e.target.value)}
+                  placeholder="Ingrese un comentario para la asignación..."
+                ></textarea>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-secondary" onClick={handleCloseModal}>
+                Cancelar
+              </button>
+              <button className="btn btn-primary" onClick={handleSubmitAsignacion}>
+                Asignar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="sidebar">
         <h4>Menú</h4>
         <a href="/MenuAdministrador"><i className="fas fa-home"></i> Dashboard</a>
@@ -165,7 +275,11 @@ function MenuTickets() {
                     <td>{ticket.categoria || 'N/A'}</td>
                     <td>{new Date(ticket.fecha).toLocaleDateString()}</td>
                     <td>
-                      <button className="btn-action" title="Asignar">
+                      <button 
+                        className="btn-action" 
+                        title="Asignar"
+                        onClick={() => handleAsignarClick(ticket)}
+                      >
                         <i className="fas fa-user-plus"></i>
                       </button>
                       <button className="btn-action" title="Ver Detalle">
