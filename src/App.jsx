@@ -3,6 +3,7 @@ import LoginPage from './Components/LoginPage';
 import MenuEmpleado from './Components/MenuEmpleado';
 import MenuCliente from './Components/MenuCliente'; 
 import MenuAdministrador from './Components/administrator/MenuAdministrador';
+import MenuTickets from './Components/administrator/MenuTickets';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/MenuCliente" element={<MenuCliente/>}/>
       <Route path="/MenuEmpleado" element={<MenuEmpleado/>}/>
       <Route path="/MenuAdministrador" element={<MenuAdministrador/>}/>
+      <Route path="/MenuTickets" element={<MenuTickets/>}/>
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
