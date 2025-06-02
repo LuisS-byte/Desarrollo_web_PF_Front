@@ -4,6 +4,8 @@ import MenuEmpleado from './Components/MenuEmpleado';
 import MenuCliente from './Components/MenuCliente'; 
 import MenuAdministrador from './Components/administrator/MenuAdministrador';
 import MenuTickets from './Components/administrator/MenuTickets';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
   return (
