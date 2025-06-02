@@ -1,7 +1,9 @@
-function MenuCliente() {
-  return (
-    <div>MenuCLiente</div>
-  )
-}
+// src/Components/MenuCliente.jsx
+import React from 'react';
+import DashboardTickets from '../Cliente/DashboardTickets';
 
-export default MenuCliente
+const MenuCliente = () => {
+  return <DashboardTickets />;
+};
+
+export default MenuCliente;
