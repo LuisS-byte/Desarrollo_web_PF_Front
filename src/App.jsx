@@ -1,11 +1,11 @@
 import { Route, Routes, Navigate } from 'react-router-dom'; 
 import LoginPage from './Components/LoginPage';
-import MenuEmpleado from './Components/MenuEmpleado';
 import MenuCliente from './Components/MenuCliente'; 
 import MenuAdministrador from './Components/administrator/MenuAdministrador';
 import MenuTickets from './Components/administrator/MenuTickets';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import MenuEmpleado from './Components/Employee/MenuEmpleado';
 
 function App() {
   return (
