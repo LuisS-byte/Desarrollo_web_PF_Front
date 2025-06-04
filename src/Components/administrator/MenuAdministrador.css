@@ -59,7 +59,7 @@
 }
 
 /* Dashboard Container */
-.dashboard-container {
+.dashboard-container2 {
   margin-left: 250px;
   padding: 1.2rem 1rem;
   background: linear-gradient(135deg, #f4f7fc 60%, #e0e7ff 100%);
@@ -177,16 +177,21 @@
   border-radius: 7px;
   font-size: 0.85em;
   font-weight: 500;
+  
+}
+.badge-secondary {
+  background: #042f85;
+  color: #00339a;
 }
 .badge-open {
-  background: #e0f2fe;
-  color: #0284c7;
+  background: #c4f307;
+  color: #ff0000;
 }
 .badge-progress {
   background: #fef9c3;
-  color: #b45309;
+  color: #ff6f00;
 }
 .badge-resolved {
-  background: #dcfce7;
+  background: #09a13e;
   color: #15803d;
 }

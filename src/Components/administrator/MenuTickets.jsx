@@ -35,27 +35,33 @@ function MenuTickets() {
   // Configuración de Axios con interceptor para el token
   useEffect(() => {
     // Interceptor para añadir el token a las peticiones
-    axios.interceptors.request.use(config => {
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    axios.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
       }
-      return config;
-    }, error => {
-      return Promise.reject(error);
-    });
+    );
 
     // Interceptor para manejar errores de autenticación
-    axios.interceptors.response.use(response => {
-      return response;
-    }, error => {
-      if (error.response && error.response.status === 401) {
-        // Token inválido o expirado
-        localStorage.removeItem('authToken');
-        navigate('/login');
+    axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          // Token inválido o expirado
+          localStorage.removeItem("authToken");
+          navigate("/login");
+        }
+        return Promise.reject(error);
       }
-      return Promise.reject(error);
-    });
+    );
   }, [navigate]);
 
   const fetchData = async () => {
@@ -69,7 +75,9 @@ function MenuTickets() {
         estadosRes,
         serviciosRes,
       ] = await Promise.all([
-        axios.get("http://localhost:5053/api/Administrador/TicketsPendientesAsignacion"),
+        axios.get(
+          "http://localhost:5053/api/Administrador/TicketsPendientesAsignacion"
+        ),
         axios.get("http://localhost:5053/api/Administrador/TicketsAsignados"),
         axios.get("http://localhost:5053/api/Administrador/ListaTecnicos"),
         axios.get("http://localhost:5053/api/Administrador/ListaPrioridades"),
@@ -85,7 +93,7 @@ function MenuTickets() {
       setServicios(serviciosRes.data.value);
     } catch (err) {
       if (err.response && err.response.status === 401) {
-        navigate('/login');
+        navigate("/login");
       } else {
         setError(err.message);
       }
@@ -96,12 +104,12 @@ function MenuTickets() {
 
   useEffect(() => {
     // Verificar si hay token antes de hacer las peticiones
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     if (!token) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
-    
+
     fetchData();
   }, [navigate]);
 
@@ -190,16 +198,18 @@ function MenuTickets() {
       console.error("Error al asignar ticket:", error);
       if (error.response && error.response.status === 401) {
         alert("Sesión expirada. Por favor inicie sesión nuevamente.");
-        navigate('/login');
+        navigate("/login");
       } else {
-        alert("Error al asignar el ticket: " + (error.response?.data?.message || error.message));
+        alert(
+          "Error al asignar el ticket: " +
+            (error.response?.data?.message || error.message)
+        );
       }
     }
   };
 
   if (loading) return <div className="loading">Cargando...</div>;
   if (error) return <div className="error">Error: {error}</div>;
-
 
   return (
     <div className="tick-root">
@@ -271,9 +281,20 @@ function MenuTickets() {
         <a href="#">
           <i className="fas fa-cogs"></i> Configuración
         </a>
-        <a href="#">
-          <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </a>
+        <li>
+          <a
+            className="dropdown-item"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault(); 
+              localStorage.removeItem("authToken"); 
+              window.location.href = "/login";  
+            }}
+          >
+            <i className="fas fa-sign-out-alt me-2"></i>
+            Cerrar sesión
+          </a>
+        </li>
       </div>
 
       <div className="navbar">
@@ -371,7 +392,14 @@ function MenuTickets() {
                         title="Asignar"
                         onClick={() => handleAsignarClick(ticket)}
                       >
-                        <i className="fas fa-user-plus me-1"></i> Asignar
+                        <i className="fas fa-user-plus me-1"></i> 
+                      </button>
+                      <button
+                        className="btn-action ver-detalle-btn"
+                        title="Ver Detalle"
+                        onClick={() => navigate(`/Detalle/${ticket.id}`)}
+                      >
+                        <i className="fas fa-eye"></i>
                       </button>
                     </td>
                   </tr>
@@ -445,6 +473,7 @@ function MenuTickets() {
                   <th>Técnico</th>
                   <th>Estado</th>
                   <th>Fecha Asignación</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -464,6 +493,15 @@ function MenuTickets() {
                     </td>
                     <td>
                       {new Date(ticket.fechaAsignacion).toLocaleDateString()}
+                    </td>
+                    <td>
+                      <button
+                        className="btn-action ver-detalle-btn"
+                        title="Ver Detalle"
+                        onClick={() => navigate(`/Detalle/${ticket.id}`)}
+                      >
+                        <i className="fas fa-eye"></i>
+                      </button>
                     </td>
                   </tr>
                 ))}
