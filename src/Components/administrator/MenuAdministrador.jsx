@@ -13,14 +13,14 @@ function MenuAdministrador() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const token = localStorage.getItem('authToken'); // Recupera el token del localStorage
+        const token = localStorage.getItem("authToken"); // Recupera el token del localStorage
 
         const response = await axios.get(
           "http://localhost:5053/api/Administrador/ListaConteoTickets",
           {
             headers: {
-              Authorization: `Bearer ${token}` // Agrega el token en los headers
-            }
+              Authorization: `Bearer ${token}`, // Agrega el token en los headers
+            },
           }
         );
 
@@ -45,7 +45,6 @@ function MenuAdministrador() {
   if (loading) return <div className="text-center py-5">Cargando...</div>;
   if (error) return <div className="alert alert-danger">Error: {error}</div>;
 
-
   return (
     <div className="admin-root">
       <div className="dashboard-wrapper">
@@ -61,9 +60,20 @@ function MenuAdministrador() {
           <a href="#">
             <i className="fas fa-users"></i> Usuarios
           </a>
-          <a href="#">
-            <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
-          </a>
+          <li>
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={(e) => {
+                e.preventDefault(); 
+                localStorage.removeItem("authToken"); 
+                window.location.href = "/login";
+              }}
+            >
+              <i className="fas fa-sign-out-alt me-2"></i>
+              Cerrar sesión
+            </a>
+          </li>
         </div>
 
         {/* Main Content */}
@@ -71,18 +81,11 @@ function MenuAdministrador() {
           {/* Navbar */}
           <div className="navbar">
             <h5>Dashboard</h5>
-            <div>
-              <button className="btn btn-outline-light btn-sm">
-                <i className="fas fa-bell"></i>
-              </button>
-              <button className="btn btn-outline-light btn-sm">
-                <i className="fas fa-user-circle"></i>
-              </button>
-            </div>
+            
           </div>
 
           {/* Dashboard Container */}
-          <div className="dashboard-container">
+          <div className="dashboard-container2">
             {/* Resumen de tickets */}
             <div className="stats-row">
               <div className="stats-card">

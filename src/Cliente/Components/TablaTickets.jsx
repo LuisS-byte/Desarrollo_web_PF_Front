@@ -1,4 +1,6 @@
 import { useState } from 'react';
+
+import { useState } from 'react';
 import TicketRow from './TicketRow';
 
 function TablaTickets({ tickets }) {
