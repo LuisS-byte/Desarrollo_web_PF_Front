@@ -6,6 +6,7 @@ import MenuTickets from './Components/administrator/MenuTickets';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import MenuEmpleado from './Components/Employee/MenuEmpleado';
+import CrearTicketEmpleado from './Components/Employee/CrearTicketEMpleado';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/MenuEmpleado" element={<MenuEmpleado/>}/>
       <Route path="/MenuAdministrador" element={<MenuAdministrador/>}/>
       <Route path="/MenuTickets" element={<MenuTickets/>}/>
+      <Route path="/CrearTicketEmpleado" element={<CrearTicketEmpleado/>}/>
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
