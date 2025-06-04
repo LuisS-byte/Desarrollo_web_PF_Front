@@ -278,9 +278,10 @@ function MenuTickets() {
         <a href="#">
           <i className="fas fa-users"></i> Usuarios
         </a>
-        <a href="#">
-          <i className="fas fa-cogs"></i> Configuración
-        </a>
+        
+          <a href="/GenerarReporte">
+            <i className="fas fa-users"></i> Reportes
+          </a>
         <li>
           <a
             className="dropdown-item"

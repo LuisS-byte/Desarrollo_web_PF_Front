@@ -60,6 +60,9 @@ function MenuAdministrador() {
           <a href="#">
             <i className="fas fa-users"></i> Usuarios
           </a>
+          <a href="/GenerarReporte">
+            <i className="fas fa-users"></i> Reportes
+          </a>
           <li>
             <a
               className="dropdown-item"

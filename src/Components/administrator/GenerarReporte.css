@@ -1,0 +1,133 @@
+
+.admin-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: auto;
+}
+
+.card-title {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.card-title i {
+  margin-right: 10px;
+}
+
+.form-card {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.report-preview {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: auto;
+  margin-top: auto;
+}
+
+.report-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.report-header h4 {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.report-header h5 {
+  color: #3498db;
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.report-header p {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.report-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.report-summary h6 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Estilos para los badges */
+.badge-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-status.abierto {
+  background-color: #f39c12;
+  color: white;
+}
+
+.badge-status.enprogreso {
+  background-color: #3498db;
+  color: white;
+}
+
+.badge-status.resuelto {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.badge-status.asignado {
+  background-color: #9b59b6;
+  color: white;
+}
+
+.badge-prio {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-prio.alta {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.badge-prio.media {
+  background-color: #f39c12;
+  color: white;
+}
+
+.badge-prio.baja {
+  background-color: #2ecc71;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .d-flex {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

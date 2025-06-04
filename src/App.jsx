@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import MenuEmpleado from './Components/Employee/MenuEmpleado';
 import CrearTicketEmpleado from './Components/Employee/CrearTicketEMpleado';
 import DetalleTicket from './Components/administrator/DetalleTicket';
+import Reportes from './Components/administrator/Reportes';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/MenuTickets" element={<MenuTickets/>}/>
       <Route path="/CrearTicketEmpleado" element={<CrearTicketEmpleado/>}/>
       <Route path="/detalle/:id" element={<DetalleTicket />} />
+      <Route path="/GenerarReporte" element={<Reportes/>}/>
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
