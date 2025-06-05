@@ -181,16 +181,113 @@ function MenuTickets() {
         descripcion: comentario,
       };
 
+      // Primero asignamos el ticket
       const response = await axios.post(
         "http://localhost:5053/api/Administrador/CrearTicketAsignacion",
         payload
       );
 
       if (response.data.success) {
+        // Enviar correo al técnico
+        const correoPayload = {
+        destinatario: tecnicoSeleccionado.correo,
+        asunto: `Nuevo Ticket Asignado - #${selectedTicket.id.toString().padStart(3, "0")}`,
+        cuerpo: `
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #f8f9fa; padding: 15px; text-align: center; border-bottom: 1px solid #e9ecef; }
+        .content { padding: 20px; background-color: #fff; }
+        .ticket-info { margin-bottom: 20px; }
+        .ticket-info p { margin: 5px 0; }
+        .label { font-weight: bold; color: #495057; }
+        .priority { 
+            display: inline-block; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            font-size: 0.9em;
+        }
+        .footer { 
+            margin-top: 20px; 
+            padding-top: 15px; 
+            border-top: 1px solid #e9ecef; 
+            font-size: 0.9em; 
+            color: #6c757d; 
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Nuevo Ticket Asignado</h2>
+        </div>
+        
+        <div class="content">
+            <div class="ticket-info">
+                <p><span class="label">ID del Ticket:</span> #${selectedTicket.id.toString().padStart(3, "0")}</p>
+                <p><span class="label">Título:</span> ${selectedTicket.titulo}</p>
+                <p><span class="label">Prioridad:</span> 
+                    <span class="priority" style="background-color: ${
+                      selectedTicket.prioridad.toLowerCase() === 'alta' 
+                        ? '#dc3545' 
+                        : selectedTicket.prioridad.toLowerCase() === 'media' 
+                          ? '#ffc107' 
+                          : '#28a745'
+                    }; color: ${
+                      selectedTicket.prioridad.toLowerCase() === 'alta' 
+                        ? 'white' 
+                        : 'black'
+                    };">
+                        ${selectedTicket.prioridad}
+                    </span>
+                </p>
+                <p><span class="label">Categoría:</span> ${selectedTicket.categoria || "N/A"}</p>
+                <p><span class="label">Fecha de Creación:</span> ${new Date(selectedTicket.fecha).toLocaleDateString()}</p>
+                <p><span class="label">Comentarios:</span> ${comentario || "Sin comentarios adicionales"}</p>
+            </div>
+            
+            <p>Por favor ingrese al sistema para gestionar este ticket.</p>
+            
+            <a href="http://localhost:5173/" class="btn">
+                Ver Ticket en el Sistema
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>Este es un mensaje automático, por favor no responda a este correo.</p>
+            <p>&copy; ${new Date().getFullYear()} Sistema de Tickets</p>
+        </div>
+    </div>
+</body>
+</html>
+`
+      };
+
+        await axios.post(
+          "http://localhost:5053/api/Administrador/EnviarCorreo",
+          correoPayload
+        );
+
         // Actualizar los datos
         await fetchData();
         setShowModal(false);
-        alert("Ticket asignado correctamente");
+        alert(
+          "Ticket asignado correctamente y notificación enviada al técnico"
+        );
       } else {
         alert("Error al asignar el ticket: " + response.data.message);
       }
@@ -275,21 +372,21 @@ function MenuTickets() {
         <a href="/MenuTickets">
           <i className="fas fa-ticket-alt"></i> Tickets
         </a>
-        <a href="#">
+        <a href="/GestionUsuario">
           <i className="fas fa-users"></i> Usuarios
         </a>
-        
-          <a href="/GenerarReporte">
-            <i className="fas fa-users"></i> Reportes
-          </a>
+
+        <a href="/GenerarReporte">
+          <i className="fas fa-users"></i> Reportes
+        </a>
         <li>
           <a
             className="dropdown-item"
             href="#"
             onClick={(e) => {
-              e.preventDefault(); 
-              localStorage.removeItem("authToken"); 
-              window.location.href = "/login";  
+              e.preventDefault();
+              localStorage.removeItem("authToken");
+              window.location.href = "/login";
             }}
           >
             <i className="fas fa-sign-out-alt me-2"></i>
@@ -393,7 +490,7 @@ function MenuTickets() {
                         title="Asignar"
                         onClick={() => handleAsignarClick(ticket)}
                       >
-                        <i className="fas fa-user-plus me-1"></i> 
+                        <i className="fas fa-user-plus me-1"></i>
                       </button>
                       <button
                         className="btn-action ver-detalle-btn"

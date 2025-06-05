@@ -57,7 +57,7 @@ function MenuAdministrador() {
           <a href="/MenuTickets">
             <i className="fas fa-ticket-alt"></i> Tickets
           </a>
-          <a href="#">
+          <a href="/GestionUsuario">
             <i className="fas fa-users"></i> Usuarios
           </a>
           <a href="/GenerarReporte">
