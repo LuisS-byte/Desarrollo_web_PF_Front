@@ -1,0 +1,133 @@
+
+.sidebar2 {
+  height: 100%;
+  background-color: #1e293b;
+  color: #ffffff;
+  padding: 1rem;
+  position: fixed;
+  width: 250px;
+  top: 0;
+    left: 0;
+}
+.sidebar2 h4 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.sidebar2 a {
+  color: #94a3b8;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+.sidebar2 a i {
+  margin-right: 10px;
+}
+.sidebar2 a:hover {
+  background-color: #334155;
+  color: #ffffff;
+}
+
+
+.users-table {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(30, 41, 59, 0.1),
+    0 1px 2px rgba(59, 130, 246, 0.07);
+  padding: 2rem 1.5rem;
+  border: 1px solid #e0e7ef;
+  margin: 0 auto;
+}
+.users-table h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+.table thead th {
+  background: #f1f5f9;
+  color: #2563eb;
+  font-weight: 700;
+  border-bottom: 2px solid #e0e7ef;
+  font-size: 1rem;
+  padding: 0.9rem 0.6rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.table tbody tr {
+  transition: background 0.2s;
+}
+.table tbody tr:hover {
+  background-color: #e0e7ff;
+}
+.table td,
+.table th {
+  vertical-align: middle;
+  padding: 0.7rem 0.6rem;
+  text-align: center;
+}
+.table td.td-name {
+  text-align: left;
+  font-weight: 500;
+  color: #334155;
+}
+.badge-role {
+  padding: 0.3em 0.9em;
+  border-radius: 8px;
+  font-size: 0.92em;
+  font-weight: 600;
+  display: inline-block;
+}
+.badge-role.admin {
+  background: #2563eb;
+  color: #fff;
+}
+.badge-role.tecnico {
+  background: #facc15;
+  color: #92400e;
+}
+.badge-role.usuario {
+  background: #22c55e;
+  color: #fff;
+}
+.btn-action {
+  border-radius: 8px;
+  padding: 0.35rem 0.7rem;
+  font-size: 1.1rem;
+  border: none;
+  background: #f1f5f9;
+  color: #2563eb;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-action:hover {
+  background: #2563eb;
+  color: #fff;
+}
+.btn-add-user {
+  background-color: #2563eb;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  margin-bottom: 1.5rem;
+  transition: background 0.2s;
+}
+.btn-add-user:hover {
+  background-color: #1d4ed8;
+}
+.search-bar {
+  max-width: 300px;
+  margin-bottom: 1rem;
+}
+@media (max-width: 900px) {
+  .users-table {
+    padding: 1.2rem 0.5rem;
+    max-width: 98vw;
+  }
+}
