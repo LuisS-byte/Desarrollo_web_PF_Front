@@ -363,15 +363,7 @@ function GestionUsuario() {
                         >
                           <i className="fas fa-edit"></i>
                         </button>
-                        <button className="btn-action" title="Eliminar">
-                          <i className="fas fa-trash"></i>
-                        </button>
-                        <button
-                          className="btn-action"
-                          title="Resetear contraseña"
-                        >
-                          <i className="fas fa-key"></i>
-                        </button>
+                        
                       </td>
                     </tr>
                   ))}
