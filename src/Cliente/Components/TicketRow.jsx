@@ -1,6 +1,6 @@
 import { formatearFecha } from './Utils/formatoFecha';
 
-function TicketRow({ ticket }) {
+function TicketRow({ ticket, onVerDetalle }) {
   const prioridadClase = {
     Alta: 'badge-prio alta',
     Media: 'badge-prio media',
@@ -13,7 +13,7 @@ function TicketRow({ ticket }) {
     Cerrado: 'badge-status resuelto',
   };
 
-  return (
+    return (
     <tr>
       <td><strong>#{ticket.id}</strong></td>
       <td className="td-title">{ticket.descripcion}</td>
@@ -29,7 +29,13 @@ function TicketRow({ ticket }) {
       </td>
       <td>{formatearFecha(ticket.fecha)}</td>
       <td>
-        <button className="btn-action" title="Ver detalle">
+        <button
+          className="btn-action"
+          title="Ver detalle"
+          data-bs-toggle="modal"
+          data-bs-target="#modalDetalleTicket"
+          onClick={() => onVerDetalle(ticket)}
+        >
           <i className="fas fa-eye text-primary"></i>
         </button>
       </td>
